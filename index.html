@@ -1,337 +1,194 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Злая Кадровичка — HR без купюр</title>
-<style>
-  :root{
-    --bg: #FFFFFF;
-    --bg-soft: #F4F7FE;
-    --blue: #2451E0;
-    --blue-deep: #17318C;
-    --ink: #10192B;
-    --ink-soft: #5B6472;
-    --line: #E4E9F5;
-  }
-
-  *{ box-sizing: border-box; }
-  html{ scroll-behavior: smooth; }
-
-  body{
-    margin:0;
-    background: var(--bg);
-    color: var(--ink);
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  .wrap{ max-width: 880px; margin: 0 auto; padding: 0 24px; }
-  a{ color: inherit; }
-
-  /* ---------- NAV ---------- */
-  nav{
-    border-bottom: 1px solid var(--line);
-  }
-  .nav-inner{
-    max-width: 880px; margin: 0 auto; padding: 20px 24px;
-    display:flex; align-items:center; justify-content: space-between;
-  }
-  .logo{
-    font-weight: 700; font-size: 16px; letter-spacing: -0.01em;
-  }
-  .logo span{ color: var(--blue); }
-  .nav-links{ display:flex; gap: 28px; font-size: 14px; color: var(--ink-soft); }
-  .nav-links a:hover{ color: var(--blue); }
-
-  /* ---------- HERO ---------- */
-  .hero{ padding: 76px 0 56px; }
-  .eyebrow{
-    color: var(--blue);
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 18px;
-  }
-  h1{
-    font-size: clamp(32px, 5vw, 48px);
-    font-weight: 700;
-    line-height: 1.14;
-    letter-spacing: -0.02em;
-    margin: 0 0 20px;
-    max-width: 18ch;
-  }
-  .lede{
-    font-size: 18px;
-    color: var(--ink-soft);
-    max-width: 52ch;
-    margin: 0 0 32px;
-  }
-  .btn{
-    display:inline-block;
-    background: var(--blue);
-    color: #fff;
-    font-weight: 600;
-    font-size: 15px;
-    text-decoration: none;
-    padding: 14px 26px;
-    border-radius: 8px;
-    transition: background 0.15s ease, transform 0.15s ease;
-  }
-  .btn:hover{ background: var(--blue-deep); transform: translateY(-1px); }
-  .btn-ghost{
-    display:inline-block;
-    color: var(--blue);
-    font-weight: 600;
-    font-size: 15px;
-    text-decoration: none;
-    padding: 14px 8px;
-    margin-left: 8px;
-  }
-
-  /* ---------- STATS ---------- */
-  .stats{
-    display:grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--line);
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    overflow: hidden;
-    margin-top: 48px;
-  }
-  .stat{
-    background: var(--bg-soft);
-    padding: 24px 20px;
-    text-align: left;
-  }
-  .stat .num{
-    font-size: 28px; font-weight: 700; color: var(--blue-deep);
-    letter-spacing: -0.01em;
-  }
-  .stat .label{ font-size: 13px; color: var(--ink-soft); margin-top: 4px; }
-
-  /* ---------- SECTION HEADERS ---------- */
-  section{ padding: 64px 0; border-top: 1px solid var(--line); }
-  .section-eyebrow{
-    color: var(--blue); font-size: 13px; font-weight: 600; margin-bottom: 10px;
-  }
-  h2{
-    font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 16px;
-  }
-  p.body-text{ color: var(--ink-soft); font-size: 16px; max-width: 58ch; }
-
-  /* ---------- PROCESS ---------- */
-  .steps{
-    display:grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 36px;
-  }
-  .step .n{
-    font-size: 15px; font-weight: 700; color: var(--blue);
-    border: 1.5px solid var(--blue); width: 32px; height: 32px;
-    border-radius: 50%; display:flex; align-items:center; justify-content:center;
-    margin-bottom: 14px;
-  }
-  .step h3{ font-size: 16px; margin: 0 0 8px; }
-  .step p{ font-size: 14.5px; color: var(--ink-soft); margin:0; }
-
-  /* ---------- QUOTE CARDS ---------- */
-  .cards{ display:grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 32px; }
-  .card{
-    background: var(--bg-soft);
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    padding: 22px 24px;
-  }
-  .card .quote{ font-size: 16px; margin: 0 0 10px; }
-  .card .context{ font-size: 13px; color: var(--ink-soft); }
-
-  /* ---------- OFFER ---------- */
-  .offer-box{
-    background: var(--blue);
-    color: #fff;
-    border-radius: 16px;
-    padding: 40px 36px;
-    margin-top: 8px;
-  }
-  .offer-box .section-eyebrow{ color: #C6D5FF; }
-  .offer-box h2{ color: #fff; }
-  .offer-box p.body-text{ color: #DCE6FF; }
-  .offer-box ul{ margin: 22px 0 30px; padding: 0; list-style: none; }
-  .offer-box li{
-    padding: 11px 0; border-top: 1px solid rgba(255,255,255,0.18);
-    font-size: 15px;
-  }
-  .offer-box li:last-child{ border-bottom: 1px solid rgba(255,255,255,0.18); }
-  .offer-box .btn{ background: #fff; color: var(--blue-deep); }
-  .offer-box .btn:hover{ background: #EAF1FF; }
-
-  /* ---------- FAQ ---------- */
-  .faq-item{ border-top: 1px solid var(--line); padding: 20px 0; }
-  .faq-item:last-child{ border-bottom: 1px solid var(--line); }
-  .faq-item summary{
-    cursor: pointer; font-weight: 600; font-size: 16px; list-style: none;
-    display:flex; justify-content: space-between; align-items:center;
-  }
-  .faq-item summary::-webkit-details-marker{ display:none; }
-  .faq-item summary::after{ content:"+"; color: var(--blue); font-size: 20px; font-weight: 400; }
-  .faq-item[open] summary::after{ content:"−"; }
-  .faq-item p{ color: var(--ink-soft); font-size: 15px; margin: 12px 0 0; max-width: 60ch; }
-
-  /* ---------- FOOTER ---------- */
-  footer{ padding: 48px 0 60px; }
-  .footer-grid{
-    display:grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 24px;
-    font-size: 14px;
-  }
-  .footer-grid .logo{ margin-bottom: 10px; }
-  .footer-grid p{ color: var(--ink-soft); max-width: 32ch; }
-  .footer-col h4{ font-size: 13px; color: var(--ink-soft); margin: 0 0 12px; font-weight: 600; }
-  .footer-col a{ display:block; color: var(--ink); text-decoration:none; margin-bottom: 10px; }
-  .footer-col a:hover{ color: var(--blue); }
-  .footer-bottom{
-    margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--line);
-    font-size: 13px; color: var(--ink-soft);
-  }
-
-  @media (max-width: 640px){
-    .stats{ grid-template-columns: 1fr; }
-    .steps{ grid-template-columns: 1fr; }
-    .cards{ grid-template-columns: 1fr; }
-    .footer-grid{ grid-template-columns: 1fr; }
-    .nav-links{ display:none; }
-    .offer-box{ padding: 30px 22px; }
-  }
-</style>
+  <meta charset="utf-8">
+  <style>
+      body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: #10192B; background: #FFFFFF; }
+      a { text-decoration: none; }
+      .po-btn-primary:hover { background: #17318C; }
+      .po-btn-white:hover { background: #EAF1FF; }
+      .po-nav-link:hover { color: #2451E0; }
+      .po-footer-link:hover { color: #2451E0; }
+      @media (max-width: 640px) {
+        .po-stats { grid-template-columns: 1fr !important; }
+        .po-steps { grid-template-columns: 1fr !important; }
+        .po-cards { grid-template-columns: 1fr !important; }
+        .po-footer-grid { grid-template-columns: 1fr !important; }
+        .po-nav-links { display: none !important; }
+      }
+    </style>
 </head>
 <body>
 
-<nav>
-  <div class="nav-inner">
-    <div class="logo">Злая <span>Кадровичка</span></div>
-    <div class="nav-links">
-      <a href="#dosje">Досье</a>
-      <a href="#offer">Консультация</a>
-      <a href="#faq">Вопросы</a>
+<div style="width: 100%; box-sizing: border-box; display: flex; flex-direction: column;">
+
+  <!-- NAV -->
+  <div style="border-bottom: 1px solid #E4E9F5;">
+    <div style="max-width: 880px; margin: 0 auto; padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; box-sizing: border-box;">
+      <div style="font-weight: 700; font-size: 16px; letter-spacing: -0.01em;">Prime <span style="color: #2451E0;">Offer</span></div>
+      <div class="po-nav-links" style="display: flex; gap: 20px; font-size: 13.5px; color: #5B6472; flex-wrap: wrap;">
+        <a class="po-nav-link" href="how-it-works.html" style="color: #5B6472;">Как это работает</a>
+        <a class="po-nav-link" href="services.html" style="color: #5B6472;">Услуги</a>
+        <a class="po-nav-link" href="reviews.html" style="color: #5B6472;">Отзывы</a>
+        <a class="po-nav-link" href="free.html" style="color: #5B6472;">Бесплатное</a>
+        <a class="po-nav-link" href="faq.html" style="color: #5B6472;">FAQ</a>
+        <a class="po-nav-link" href="more-info.html" style="color: #5B6472;">Ещё</a>
+      </div>
     </div>
   </div>
-</nav>
 
-<div class="wrap">
-
-  <section class="hero" style="border-top:none;">
-    <div class="eyebrow">HR-эксперт · реальные собеседования</div>
-    <h1>Записываю, что на самом деле говорят на собеседованиях</h1>
-    <p class="lede">Без пересказа для приличия. Дословные цитаты кандидатов и интервьюеров — и что с этим делать, если узнали в них себя или свою компанию.</p>
-    <a class="btn" href="#offer">Записаться на консультацию</a>
-    <a class="btn-ghost" href="https://x.com/Filipp_cat" target="_blank" rel="noopener">Читать на X →</a>
-
-    <div class="stats">
-      <div class="stat"><div class="num">87</div><div class="label">историй с апреля 2026</div></div>
-      <div class="stat"><div class="num">1377</div><div class="label">лайков у топ-поста</div></div>
-      <div class="stat"><div class="num">710</div><div class="label">подписчиков и растёт</div></div>
+  <!-- HERO -->
+  <div style="max-width: 880px; margin: 0 auto; width: 100%; box-sizing: border-box; padding: 76px 24px 56px; display: flex; flex-direction: column;">
+    <div style="color: #2451E0; font-size: 14px; font-weight: 600; margin-bottom: 18px;">Карьерный консультант</div>
+    <h1 style="font-size: 46px; font-weight: 700; line-height: 1.14; letter-spacing: -0.02em; margin: 0 0 20px; max-width: 19ch;">Знаю, что происходит по ту сторону собеседования — помогу дойти до оффера</h1>
+    <p style="font-size: 18px; color: #5B6472; max-width: 52ch; margin: 0 0 32px;">Резюме, самопрезентация и переговоры о зарплате — с точки зрения того, кто видел сотни реальных интервью изнутри. Без общих советов, только то, что действительно работает.</p>
+    <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 4px;">
+      <a class="po-btn-primary" href="#offer" style="display: inline-block; background: #2451E0; color: #fff; font-weight: 600; font-size: 15px; padding: 14px 26px; border-radius: 8px;">Записаться на консультацию</a>
+      <a href="#" style="display: inline-block; color: #2451E0; font-weight: 600; font-size: 15px; padding: 14px 8px; margin-left: 8px;">Смотреть кейсы →</a>
     </div>
-  </section>
 
-  <section>
-    <div class="section-eyebrow">Процесс</div>
-    <h2>Как это работает</h2>
-    <div class="steps">
-      <div class="step">
-        <div class="n">01</div>
-        <h3>Читаете ленту</h3>
-        <p>Каждый будний день — реальная цитата с собеседования и короткий сухой комментарий, без прикрас.</p>
+    <div class="po-stats" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: #E4E9F5; border: 1px solid #E4E9F5; border-radius: 12px; overflow: hidden; margin-top: 48px;">
+      <div style="background: #F4F7FE; padding: 24px 20px;">
+        <div style="font-size: 28px; font-weight: 700; color: #17318C;">—</div>
+        <div style="font-size: 13px; color: #5B6472; margin-top: 4px;">клиентов на консультациях</div>
       </div>
-      <div class="step">
-        <div class="n">02</div>
-        <h3>Узнаёте ситуацию</h3>
-        <p>Часто в историях узнаётся собственный найм — свой или чужой. Это не совпадение, это система.</p>
+      <div style="background: #F4F7FE; padding: 24px 20px;">
+        <div style="font-size: 28px; font-weight: 700; color: #17318C;">—</div>
+        <div style="font-size: 13px; color: #5B6472; margin-top: 4px;">рост зарплаты после сопровождения</div>
       </div>
-      <div class="step">
-        <div class="n">03</div>
-        <h3>Разбираем на консультации</h3>
-        <p>Смотрим на ваш процесс найма или подготовку к интервью — что из этого действительно про вас.</p>
+      <div style="background: #F4F7FE; padding: 24px 20px;">
+        <div style="font-size: 28px; font-weight: 700; color: #17318C;">—</div>
+        <div style="font-size: 13px; color: #5B6472; margin-top: 4px;">самый быстрый оффер</div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <section id="dosje">
-    <div class="section-eyebrow">Приложение A</div>
-    <h2>Что попадает в ленту</h2>
-    <p class="body-text">Примеры формата — иллюстрация, не скриншоты реальных постов.</p>
-    <div class="cards">
-      <div class="card">
-        <p class="quote">«NDA я подписывать не буду, вдруг вы потом с моих слов книгу напишете»</p>
-        <p class="context">интервьюер — кандидату на позицию младшего аналитика</p>
+  <!-- PROCESS -->
+  <div style="max-width: 880px; margin: 0 auto; width: 100%; box-sizing: border-box; padding: 64px 24px; border-top: 1px solid #E4E9F5;">
+    <div style="color: #2451E0; font-size: 13px; font-weight: 600; margin-bottom: 10px;">Процесс</div>
+    <h2 style="font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 16px;">Как проходит работа</h2>
+    <div class="po-steps" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 36px;">
+      <div>
+        <div style="font-size: 15px; font-weight: 700; color: #2451E0; border: 1.5px solid #2451E0; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 14px;">01</div>
+        <h3 style="font-size: 16px; margin: 0 0 8px;">Разбираем ситуацию</h3>
+        <p style="font-size: 14.5px; color: #5B6472; margin: 0;">Смотрим на резюме, отклики и то, где именно застревает поиск — не в общих чертах, а по фактам.</p>
       </div>
-      <div class="card">
-        <p class="quote">«У нас гибкий график: приходить можно во сколько угодно, если это восемь утра»</p>
-        <p class="context">HRBP — на этапе оффера</p>
+      <div>
+        <div style="font-size: 15px; font-weight: 700; color: #2451E0; border: 1.5px solid #2451E0; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 14px;">02</div>
+        <h3 style="font-size: 16px; margin: 0 0 8px;">Готовим к интервью</h3>
+        <p style="font-size: 14.5px; color: #5B6472; margin: 0;">Прорабатываем самопрезентацию и ответы на реальных примерах вопросов, которые задают на собеседованиях.</p>
       </div>
-      <div class="card">
-        <p class="quote">«Стрессоустойчивость проверим прямо сейчас — скажите, почему вы нам не подходите»</p>
-        <p class="context">технический директор — на первом собеседовании</p>
-      </div>
-      <div class="card">
-        <p class="quote">«Мы не задерживаем зарплату, мы её переносим»</p>
-        <p class="context">финансовый директор — на созвоне с командой</p>
+      <div>
+        <div style="font-size: 15px; font-weight: 700; color: #2451E0; border: 1.5px solid #2451E0; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 14px;">03</div>
+        <h3 style="font-size: 16px; margin: 0 0 8px;">Доводим до оффера</h3>
+        <p style="font-size: 14.5px; color: #5B6472; margin: 0;">Отдельно разбираем переговоры о зарплате — как назвать цифру и не продешевить.</p>
       </div>
     </div>
-  </section>
+  </div>
 
-  <section id="offer" style="border-top:none;">
-    <div class="offer-box">
-      <div class="section-eyebrow">Условия</div>
-      <h2>Консультация по вашему кейсу</h2>
-      <p class="body-text">Разбираем процесс найма, тексты вакансий и то, что реально происходит на ваших собеседованиях — со стороны кандидата или со стороны компании.</p>
-      <ul>
-        <li>Аудит текущего процесса найма и точек, где он ломается</li>
-        <li>Разбор 2–3 реальных интервью из вашей практики</li>
-        <li>План правок — без общих слов, с конкретными формулировками</li>
-      </ul>
-      <a class="btn" href="#" target="_blank" rel="noopener">Записаться на консультацию</a>
+  <!-- SERVICES -->
+  <div id="services" style="max-width: 880px; margin: 0 auto; width: 100%; box-sizing: border-box; padding: 64px 24px; border-top: 1px solid #E4E9F5;">
+    <div style="color: #2451E0; font-size: 13px; font-weight: 600; margin-bottom: 10px;">Услуги и цены</div>
+    <h2 style="font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 16px;">Выберите формат</h2>
+    <p style="color: #5B6472; font-size: 16px; max-width: 58ch; margin: 0;">Цены уточняйте при записи — здесь только форматы.</p>
+    <div class="po-cards" style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 32px;">
+      <div style="background: #F4F7FE; border: 1px solid #E4E9F5; border-radius: 12px; padding: 22px 24px;">
+        <div style="font-size: 16px; font-weight: 600; margin: 0 0 8px;">Экспресс-аудит резюме</div>
+        <p style="font-size: 14.5px; color: #5B6472; margin: 0 0 14px;">Разбор за 24 часа. Критические ошибки и список конкретных правок.</p>
+        <div style="font-size: 14px; font-weight: 600; color: #17318C;">Цена по запросу</div>
+      </div>
+      <div style="background: #F4F7FE; border: 1px solid #E4E9F5; border-radius: 12px; padding: 22px 24px;">
+        <div style="font-size: 16px; font-weight: 600; margin: 0 0 8px;">Карьерная консультация</div>
+        <p style="font-size: 14.5px; color: #5B6472; margin: 0 0 14px;">Находим барьер и составляем план: куда идти и как себя подавать.</p>
+        <div style="font-size: 14px; font-weight: 600; color: #17318C;">Цена по запросу</div>
+      </div>
+      <div style="background: #F4F7FE; border: 1px solid #E4E9F5; border-radius: 12px; padding: 22px 24px;">
+        <div style="font-size: 16px; font-weight: 600; margin: 0 0 8px;">Тестовое собеседование</div>
+        <p style="font-size: 14.5px; color: #5B6472; margin: 0 0 14px;">Симуляция реального интервью и честный фидбек без прикрас.</p>
+        <div style="font-size: 14px; font-weight: 600; color: #17318C;">Цена по запросу</div>
+      </div>
+      <div style="background: #F4F7FE; border: 1px solid #E4E9F5; border-radius: 12px; padding: 22px 24px;">
+        <div style="font-size: 16px; font-weight: 600; margin: 0 0 8px;">Сопровождение до оффера</div>
+        <p style="font-size: 14.5px; color: #5B6472; margin: 0 0 14px;">Идём вместе от первого созвона до подписания оффера.</p>
+        <div style="font-size: 14px; font-weight: 600; color: #17318C;">Цена по запросу</div>
+      </div>
     </div>
-  </section>
+  </div>
 
-  <section id="faq">
-    <div class="section-eyebrow">Частые вопросы</div>
-    <h2>Отвечаем честно</h2>
-    <details class="faq-item">
-      <summary>Это реальные истории?</summary>
-      <p>Да, формат в ленте — дословные цитаты из реальных собеседований, только без имён и лишних деталей, по которым можно узнать компанию или человека.</p>
-    </details>
-    <details class="faq-item">
-      <summary>Как проходит консультация?</summary>
-      <p>Звонок 45–60 минут, разбираем конкретную ситуацию — вашу как кандидата или вашей команды как нанимающей стороны. По итогам — план из конкретных шагов.</p>
-    </details>
-    <details class="faq-item">
-      <summary>Можно остаться анонимным?</summary>
-      <p>Да, для консультации не нужно публичности — обсуждаем ваш кейс приватно, без привязки к соцсетям.</p>
-    </details>
-  </section>
+  <!-- INSIGHT -->
+  <div id="insight" style="max-width: 880px; margin: 0 auto; width: 100%; box-sizing: border-box; padding: 64px 24px; border-top: 1px solid #E4E9F5;">
+    <div style="color: #2451E0; font-size: 13px; font-weight: 600; margin-bottom: 10px;">Взгляд изнутри</div>
+    <h2 style="font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 16px;">Что видно с другой стороны стола</h2>
+    <p style="color: #5B6472; font-size: 16px; max-width: 58ch; margin: 0;">Примеры того, как на самом деле принимаются решения по кандидатам — иллюстрация, не реальная цитата конкретного собеседования.</p>
+    <div style="background: #F4F7FE; border: 1px solid #E4E9F5; border-left: 3px solid #2451E0; border-radius: 10px; padding: 20px 22px; margin-top: 16px;">
+      <p style="margin: 0; font-size: 15.5px;">Отказ часто приходит не из-за навыков, а из-за того, как кандидат говорит о провалах на прошлых местах — рекрутер слышит «проблемный человек» там, где кандидат хотел показать честность.</p>
+      <div style="font-size: 13px; color: #5B6472; margin-top: 8px;">типичная причина отказа после сильного резюме</div>
+    </div>
+    <div style="background: #F4F7FE; border: 1px solid #E4E9F5; border-left: 3px solid #2451E0; border-radius: 10px; padding: 20px 22px; margin-top: 16px;">
+      <p style="margin: 0; font-size: 15.5px;">Молчание после отклика редко значит «резюме плохое» — чаще оно не проходит автоматический фильтр по ключевым словам раньше, чем его увидит человек.</p>
+      <div style="font-size: 13px; color: #5B6472; margin-top: 8px;">типичная причина тишины на hh и в LinkedIn</div>
+    </div>
+  </div>
+
+  <!-- OFFER -->
+  <div id="offer" style="max-width: 880px; margin: 0 auto; width: 100%; box-sizing: border-box; padding: 0 24px 64px;">
+    <div style="background: #2451E0; color: #fff; border-radius: 16px; padding: 40px 36px;">
+      <div style="color: #C6D5FF; font-size: 13px; font-weight: 600; margin-bottom: 10px;">Начать</div>
+      <h2 style="font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 16px; color: #fff;">Готовы попробовать?</h2>
+      <p style="color: #DCE6FF; font-size: 16px; max-width: 58ch; margin: 0;">Короткий созвон — разберёмся, нужна ли вам помощь и какой формат подойдёт именно вашей ситуации.</p>
+      <div style="margin: 22px 0 30px;">
+        <div style="padding: 11px 0; border-top: 1px solid rgba(255,255,255,0.18); font-size: 15px;">Разбор текущего резюме и стратегии поиска</div>
+        <div style="padding: 11px 0; border-top: 1px solid rgba(255,255,255,0.18); font-size: 15px;">Честная оценка, где реально теряются офферы</div>
+        <div style="padding: 11px 0; border-top: 1px solid rgba(255,255,255,0.18); border-bottom: 1px solid rgba(255,255,255,0.18); font-size: 15px;">План действий под вашу специальность</div>
+      </div>
+      <a class="po-btn-white" href="#" style="display: inline-block; background: #fff; color: #17318C; font-weight: 600; font-size: 15px; padding: 14px 26px; border-radius: 8px;">Заполнить анкету</a>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div id="faq" style="max-width: 880px; margin: 0 auto; width: 100%; box-sizing: border-box; padding: 0 24px 64px;">
+    <div style="color: #2451E0; font-size: 13px; font-weight: 600; margin-bottom: 10px;">Частые вопросы</div>
+    <h2 style="font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 16px;">Отвечаем честно</h2>
+    <div style="border-top: 1px solid #E4E9F5; padding: 20px 0;">
+      <div style="font-weight: 600; font-size: 16px;">Чем это отличается от рекрутера?</div>
+      <p style="color: #5B6472; font-size: 15px; margin: 12px 0 0; max-width: 60ch;">Рекрутер работает в интересах компании. Карьерный консультант — на стороне кандидата: помогает подать себя так, чтобы отклики превращались в офферы.</p>
+    </div>
+    <div style="border-top: 1px solid #E4E9F5; padding: 20px 0;">
+      <div style="font-weight: 600; font-size: 16px;">Сколько стоит консультация?</div>
+      <p style="color: #5B6472; font-size: 15px; margin: 12px 0 0; max-width: 60ch;">Формат и цену уточняем на коротком вводном созвоне — исходя из вашей ситуации и того, что уже пробовали.</p>
+    </div>
+    <div style="border-top: 1px solid #E4E9F5; border-bottom: 1px solid #E4E9F5; padding: 20px 0;">
+      <div style="font-weight: 600; font-size: 16px;">Это только для IT?</div>
+      <p style="color: #5B6472; font-size: 15px; margin: 12px 0 0; max-width: 60ch;">Нет, работаем с разными специальностями — принципы подготовки к интервью и переговорам о зарплате похожи независимо от сферы.</p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div style="width: 100%; box-sizing: border-box; padding: 48px 0 60px;">
+    <div style="max-width: 880px; margin: 0 auto; padding: 0 24px; box-sizing: border-box;">
+      <div class="po-footer-grid" style="display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 24px; font-size: 14px;">
+        <div>
+          <div style="font-weight: 700; font-size: 16px; letter-spacing: -0.01em; margin-bottom: 10px;">Prime <span style="color: #2451E0;">Offer</span></div>
+          <p style="color: #5B6472; max-width: 32ch; margin: 0;">Карьерный консалтинг с инсайдерским взглядом на найм — без общих советов.</p>
+        </div>
+        <div>
+          <div style="font-size: 13px; color: #5B6472; margin: 0 0 12px; font-weight: 600;">Проект</div>
+          <a class="po-footer-link" href="how-it-works.html" style="display: block; color: #10192B; margin-bottom: 10px;">Как это работает</a>
+          <a class="po-footer-link" href="services.html" style="display: block; color: #10192B; margin-bottom: 10px;">Услуги</a>
+          <a class="po-footer-link" href="reviews.html" style="display: block; color: #10192B; margin-bottom: 10px;">Отзывы</a>
+        </div>
+        <div>
+          <div style="font-size: 13px; color: #5B6472; margin: 0 0 12px; font-weight: 600;">Ещё</div>
+          <a class="po-footer-link" href="free.html" style="display: block; color: #10192B; margin-bottom: 10px;">Бесплатное</a>
+          <a class="po-footer-link" href="faq.html" style="display: block; color: #10192B; margin-bottom: 10px;">FAQ</a>
+          <a class="po-footer-link" href="more-info.html" style="display: block; color: #10192B; margin-bottom: 10px;">Доп. информация</a>
+        </div>
+      </div>
+      <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #E4E9F5; font-size: 13px; color: #5B6472;">© 2026 Prime Offer</div>
+    </div>
+  </div>
 
 </div>
-
-<footer>
-  <div class="wrap">
-    <div class="footer-grid">
-      <div>
-        <div class="logo">Злая <span>Кадровичка</span></div>
-        <p>HR без купюр — реальные собеседования, разборы найма и консультации без иллюзий.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Проект</h4>
-        <a href="#dosje">Досье</a>
-        <a href="#offer">Консультация</a>
-        <a href="#faq">Вопросы</a>
-      </div>
-      <div class="footer-col">
-        <h4>Контакты</h4>
-        <a href="https://x.com/Filipp_cat" target="_blank" rel="noopener">X (Twitter)</a>
-      </div>
-    </div>
-    <div class="footer-bottom">© 2026 Злая Кадровичка</div>
-  </div>
-</footer>
 
 </body>
 </html>
